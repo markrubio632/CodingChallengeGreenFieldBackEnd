@@ -1,5 +1,7 @@
 package com.greenfield.model;
 
+import java.util.Date;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -7,28 +9,28 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Dependent {
 
 	@Id
-	private Integer dependentId;
+	private int dependentId;
 	private String firstName;
 	private String lastName;
-	private int enrolleeId;
+	private Date birthday;
 
 	public Dependent() {
 		super();
 	}
 
-	public Dependent(Integer dependentId, String firstName, String lastName, int enrolleeId) {
+	public Dependent(int dependentId, String firstName, String lastName, Date birthday) {
 		super();
 		this.dependentId = dependentId;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.enrolleeId = enrolleeId;
+		this.birthday = birthday;
 	}
 
-	public Integer getDependentId() {
+	public int getDependentId() {
 		return dependentId;
 	}
 
-	public void setDependentId(Integer dependentId) {
+	public void setDependentId(int dependentId) {
 		this.dependentId = dependentId;
 	}
 
@@ -48,18 +50,18 @@ public class Dependent {
 		this.lastName = lastName;
 	}
 
-	public int getEnrolleeId() {
-		return enrolleeId;
+	public Date getBirthday() {
+		return birthday;
 	}
 
-	public void setEnrolleeId(int enrolleeId) {
-		this.enrolleeId = enrolleeId;
+	public void setBirthday(Date birthday) {
+		this.birthday = birthday;
 	}
 
 	@Override
 	public String toString() {
 		return "Dependent [dependentId=" + dependentId + ", firstName=" + firstName + ", lastName=" + lastName
-				+ ", enrolleeId=" + enrolleeId + "]";
+				+ ", birthday=" + birthday + "]";
 	}
 
 }

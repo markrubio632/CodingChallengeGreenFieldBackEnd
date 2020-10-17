@@ -1,9 +1,13 @@
 package com.greenfield.model;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import com.mongodb.lang.Nullable;
 
 @Document(collection = "Enrollee")
 public class Enrollee {
@@ -14,9 +18,26 @@ public class Enrollee {
 	private String lastName;
 	private boolean activeStatus;
 	private Date birthday;
+	@Nullable
 	private String phoneNumber;
-	//@OneToMany(targetEntity = com.greenfield.model.Dependent.class, cascade=CascadeType.ALL, mappedBy="Dependent")
-	private int dependents; // used to determine a numerical amount of deps
+	@DBRef
+	private List<Dependent> dependents;
+
+	public Enrollee() {
+		super();
+	}
+
+	public Enrollee(int enrolleeId, String firstName, String lastName, boolean activeStatus, Date birthday,
+			String phoneNumber, List<Dependent> dependents) {
+		super();
+		this.enrolleeId = enrolleeId;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.activeStatus = activeStatus;
+		this.birthday = birthday;
+		this.phoneNumber = phoneNumber;
+		this.dependents = dependents;
+	}
 
 	public int getEnrolleeId() {
 		return enrolleeId;
@@ -66,14 +87,6 @@ public class Enrollee {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public int getDependents() {
-		return dependents;
-	}
-
-	public void setDependents(int dependents) {
-		this.dependents = dependents;
-	}
-
 	@Override
 	public String toString() {
 		return "Enrollee [enrolleeId=" + enrolleeId + ", firstName=" + firstName + ", lastName=" + lastName
@@ -81,19 +94,11 @@ public class Enrollee {
 				+ ", dependents=" + dependents + "]";
 	}
 
-	public Enrollee() {
-		super();
+	public List<Dependent> getDependents() {
+		return dependents;
 	}
 
-	public Enrollee(int enrolleeId, String firstName, String lastName, boolean activeStatus, Date birthday,
-			String phoneNumber, int dependents) {
-		super();
-		this.enrolleeId = enrolleeId;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.activeStatus = activeStatus;
-		this.birthday = birthday;
-		this.phoneNumber = phoneNumber;
+	public void setDependents(List<Dependent> dependents) {
 		this.dependents = dependents;
 	}
 
