@@ -10,7 +10,7 @@ EnrolleeBackEnd is a Java and Spring Boot Web application's backend. This applic
 For proper set-up, several things will be needed: 
 - MongoDB Server
 - Eclipse (or similar IDE for Java development)
-- Client Server which can be found [here](https://github.com/markrubio632/CodingChallengeGreenFieldBackEnd)
+- Client Server which can be found [here](https://github.com/markrubio632/GreenFieldClientServer/tree/master/CodingChallengeGreenFieldBackEnd)
 
 Once these are installed, import the two maven projects into your workspace in the IDE.
 
