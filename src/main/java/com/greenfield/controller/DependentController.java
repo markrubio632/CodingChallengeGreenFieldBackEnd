@@ -3,7 +3,6 @@ package com.greenfield.controller;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,7 +19,6 @@ import com.greenfield.repository.DependentRepo;
 
 @RestController
 @RequestMapping(path = "/Dependent")
-@RepositoryRestController
 public class DependentController {
 
 	@Autowired
@@ -44,13 +42,10 @@ public class DependentController {
 
 	// finds a dependent from the Dependent collection
 	@GetMapping
-	public ResponseEntity<String> FindDependent(@RequestParam int id) {
+	public ResponseEntity<Dependent> FindDependent(@RequestParam int id) {
 
-		Dependent d = new Dependent();
-		d = depDaoImpl.FindDependentById(id);
-		System.out.println(d.toString());
 
-		return new ResponseEntity<String>("found dependents", HttpStatus.FOUND);
+		return new ResponseEntity<Dependent>(depDaoImpl.FindDependentById(id), HttpStatus.FOUND);
 	}
 
 	// delete dependent
@@ -62,6 +57,7 @@ public class DependentController {
 		return new ResponseEntity<String>("Dependent has been removed", HttpStatus.OK);
 	}
 
+	//updates dependent regardless of other dependents and affiliated enrollee
 	@PutMapping
 	public ResponseEntity<String> UpdateDependent(@RequestParam int id, @RequestParam String firstName, 
 			@RequestParam String lastName, @RequestParam Date birthday){

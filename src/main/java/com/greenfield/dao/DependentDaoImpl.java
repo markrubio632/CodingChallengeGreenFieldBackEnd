@@ -29,6 +29,7 @@ public class DependentDaoImpl implements DependentDao {
 	@Autowired
 	EnrolleeRepo enrolleeRepo;
 
+	//Finds all Dependents and stores them in a list
 	public List<Dependent> FindAllDependents() {
 
 		List<Dependent> depList = new ArrayList<Dependent>();
@@ -41,6 +42,7 @@ public class DependentDaoImpl implements DependentDao {
 		return depList;
 	}
 
+	//Finds a Dependent based on the ID provided
 	public Dependent FindDependentById(int id) {
 
 		Dependent dependent = new Dependent();
@@ -56,13 +58,15 @@ public class DependentDaoImpl implements DependentDao {
 		return dependent;
 	}
 
-	@Override
+	//Adds a new dependent to a list to be used with the method AddToListOfDependents
 	public List<Dependent> AddNewDependent(Dependent dependent) {
 		List<Dependent> depList = new ArrayList<Dependent>();
 		depList.add(dependent);
 		return depList;
 	}
 
+	//Saves the previous List and adds a new Dependent to the list of established Dependents
+	//returns a new list of Dependents associated with a Enrollee
 	public List<Dependent> AddToListOfDependents(List<Dependent> depList, Dependent dependent) {
 
 		List<Dependent> list = new ArrayList<Dependent>();
@@ -73,6 +77,7 @@ public class DependentDaoImpl implements DependentDao {
 
 	}
 
+	//Updates an Enrollee with a new Dependent while keeping the previous dependents
 	public void InsertDependentWithEnrollee(int enrolleeId, String firstName, String lastName, Date birthday) {
 
 		Enrollee enrollee = new Enrollee();
@@ -87,19 +92,17 @@ public class DependentDaoImpl implements DependentDao {
 			if (e.getEnrolleeId() == enrolleeId) {
 				dList = AddToListOfDependents(e.getDependents(), dependent);
 
-				System.out.println(dList.toString());
-
 				enrolleeDaoImpl.DeleteEnrollee(e.getEnrolleeId());
 
 				enrollee = new Enrollee(e.getEnrolleeId(), e.getFirstName(), e.getLastName(), e.isActiveStatus(),
 						e.getBirthday(), e.getPhoneNumber(), dList);
-				System.out.println(e.toString());
 				enrolleeRepo.save(enrollee);
 				dependentRepo.save(dependent);
 			}
 		}
 	}
 	
+	//deletes a dependent from the DB
 	public void DeleteDependent(int id) {
 		List<Dependent> depList = new ArrayList<Dependent>();
 		
@@ -112,7 +115,7 @@ public class DependentDaoImpl implements DependentDao {
 		}
 	}
 
-	@Override
+	//Updates information of a Dependent without changing other associated information (i.e. Enrollee and other dependents' info stays intact)
 	public void UpdateSoloDependent(int id, String firstName, String lastName, Date birthday) {
 		
 		Dependent dependent = new Dependent();

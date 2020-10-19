@@ -3,7 +3,6 @@ package com.greenfield.controller;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -23,7 +22,6 @@ import com.greenfield.service.MainService;
 
 @RestController
 @RequestMapping(path = "/Enrollee")
-@RepositoryRestController
 public class EnrolleeController {
 
 	@Autowired
@@ -41,6 +39,7 @@ public class EnrolleeController {
 	@Autowired
 	MainService service;
 
+	//Saves an Enrollee to the DB
 	@PostMapping
 	public ResponseEntity<String> SaveEnrollee(@RequestParam String firstName, @RequestParam String lastName,
 			@RequestParam boolean isActiveStatus, @RequestParam Date birthday, @RequestParam String phoneNumber) {
@@ -50,16 +49,14 @@ public class EnrolleeController {
 		return new ResponseEntity<String>("Enrollee Added Successfully", HttpStatus.OK);
 	}
 
+	//Retrieves an Enrollee from the DB
 	@GetMapping
-	public ResponseEntity<String> FindEnrolleeById(@RequestParam int id) {
+	public ResponseEntity<Enrollee> FindEnrolleeById(@RequestParam int id) {
 
-		Enrollee e = new Enrollee();
-		e = enrollDaoImpl.FindById(id);
-		System.out.println(e.toString());
-
-		return new ResponseEntity<String>("Found Enrollee", HttpStatus.OK);
+		return new ResponseEntity<Enrollee>(enrollDaoImpl.FindById(id), HttpStatus.OK);
 	}
 
+	//Deletes an Enrollee from the DB using the ID provided
 	@DeleteMapping
 	public ResponseEntity<String> DeleteEnrollee(@RequestParam int id) {
 
@@ -73,6 +70,7 @@ public class EnrolleeController {
 
 	}
 
+	//Updates an existing Enrollee
 	@PutMapping
 	public ResponseEntity<String> UpdateEnrollee(@RequestParam int enrolleeId, @RequestParam String firstName,
 			@RequestParam String lastName, @RequestParam boolean isActiveStatus, @RequestParam Date birthday,

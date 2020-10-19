@@ -25,6 +25,7 @@ public class EnrolleeDaoImpl implements EnrolleeDao {
 	@Autowired
 	MainService service;
 
+	//used to find all Enrollees and place them into a list
 	public List<Enrollee> FindAllEnrollees() {
 		List<Enrollee> eList = new ArrayList<Enrollee>();
 		eList = enrolleeRepo.findAll();
@@ -34,6 +35,7 @@ public class EnrolleeDaoImpl implements EnrolleeDao {
 		return eList;
 	}
 
+	//Used to find an Enrollee using and ID to search for
 	public Enrollee FindById(int id) {
 
 		Enrollee enroll = new Enrollee();
@@ -57,6 +59,7 @@ public class EnrolleeDaoImpl implements EnrolleeDao {
 		return enroll;
 	}
 
+	//Deletes and Enrollee from the DB
 	public void DeleteEnrollee(int id) {
 		List<Enrollee> eList = new ArrayList<Enrollee>();
 
@@ -70,6 +73,7 @@ public class EnrolleeDaoImpl implements EnrolleeDao {
 
 	}
 
+	//Updates an enrollee while keeping the same dependents
 	public void UpdateEnrollee(int id, String firstName, String lastName, boolean isActiveStatus, Date birthday,
 			String phoneNumber) {
 
@@ -90,6 +94,7 @@ public class EnrolleeDaoImpl implements EnrolleeDao {
 
 	}
 	
+	//Saves an Enrollee
 	public void SaveEnrollee(String firstName, String lastName, boolean isActiveStatus, Date birthday, String phoneNumber) {
 		
 		List<Dependent> depList = new ArrayList<Dependent>();
@@ -102,7 +107,6 @@ public class EnrolleeDaoImpl implements EnrolleeDao {
 		newApplicant.setBirthday(birthday);
 		newApplicant.setPhoneNumber(phoneNumber);
 		newApplicant.setDependents(depList);
-		System.out.println(newApplicant.toString());
 		
 		enrolleeRepo.save(newApplicant);
 	}
